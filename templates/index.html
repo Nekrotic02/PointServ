@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>King of The Forest Teams</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: darkgreen; /* Set background color */
+            color: white; /* Set text color */
+        }
+        #teams-container {
+            display: flex;
+            justify-content: center;
+        }
+        .team {
+            margin: 10px;
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1); /* Set team background color */
+            border-radius: 5px; /* Add rounded corners */
+        }
+        h2, p {
+            font-size: 40px; /* Set font size for team names and points */
+        }
+    </style>
+    <script>
+        // Function to fetch teams data and update the content
+        function updateTeams() {
+            fetch('/teams')
+                .then(response => response.json())
+                .then(data => {
+                    const teamsContainer = document.getElementById('teams-container');
+                    teamsContainer.innerHTML = ''; // Clear previous content
+                    data.forEach(team => {
+                        const teamDiv = document.createElement('div');
+                        teamDiv.classList.add('team');
+                        teamDiv.innerHTML = `<h2>${team.name}</h2><p>Points: ${team.points}</p>`;
+                        teamsContainer.appendChild(teamDiv);
+                    });
+                });
+        }
+
+        // Update teams every 5 seconds
+        setInterval(updateTeams, 5000);
+
+        // Initial update when the page loads
+        updateTeams();
+    </script>
+</head>
+<body>
+    <h1>King of the Forest Teams</h1>
+    <div id="teams-container">
+        <!-- Teams will be dynamically added here -->
+        {% for team in teams %}
+            <div class="team">
+                <h2>{{ team.chosen_name }}</h2><p>Points: {{ team.points }}</p>
+            </div>
+        {% endfor %}
+    </div>    
+    
+    <!-- Add a button to redirect to the /register route -->
+    <a href="/register"><button>Register</button></a>
+</body>
+</html>
+

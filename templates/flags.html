@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Flag</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: darkgreen; /* Set background color */
+            color: white; /* Set text color */
+        }
+        #teams-container {
+            display: flex;
+            justify-content: center;
+        }
+        .team {
+            margin: 10px;
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1); /* Set team background color */
+            border-radius: 5px; /* Add rounded corners */
+        }
+        h2, p {
+            font-size: 40px; /* Set font size for team names and points */
+        }
+    </style>
+</head>
+<body>
+    <h1>Submit Flag</h1>
+    <form id="flagForm" method="POST" action="/api/submit_flag" enctype="application/x-www-form-urlencoded">
+        <label for="flag">Flag:</label>
+        <input type="text" id="flag" name="Flag" required><br><br>
+        <button type="submit">Submit Flag</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script>
+        const form = document.getElementById('flagForm');
+        const messageDiv = document.getElementById('message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: new URLSearchParams(formData)
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                messageDiv.textContent = data.message;
+            } else {
+                messageDiv.textContent = data.error;
+            }
+        });
+    </script>
+</body>
+</html>
+

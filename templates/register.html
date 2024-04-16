@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: darkgreen; /* Set background color */
+            color: white; /* Set text color */
+        }
+        #teams-container {
+            display: flex;
+            justify-content: center;
+        }
+        .team {
+            margin: 10px;
+            text-align: center;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1); /* Set team background color */
+            border-radius: 5px; /* Add rounded corners */
+        }
+        h2, p {
+            font-size: 40px; /* Set font size for team names and points */
+        }
+    </style>
+</head>
+<body>
+    <h1>Teams</h1>
+    <ul>
+        {% for team in teams %}
+            <li>{{ team.name }} - Points: {{ team.points }}</li>
+        {% endfor %}
+    </ul>
+    <form action="{{ url_for('add_team') }}" method="post">
+        <input type="text" name="team_name" placeholder="Enter team name">
+        <button type="submit">Add Team</button>
+    </form>
+</body>
+</html>
